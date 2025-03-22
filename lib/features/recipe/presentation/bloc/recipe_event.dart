@@ -6,3 +6,5 @@ abstract class RecipeEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class GetTrendingRecipesEvent extends RecipeEvent {}

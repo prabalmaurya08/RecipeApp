@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
+
 import 'package:recipe_app/features/profile/data/remotesource/profile_remotesource.dart';
 import 'package:recipe_app/features/profile/data/repository/profile_repository_impl.dart';
 import 'package:recipe_app/features/profile/domain/repository/profile_repository.dart';
