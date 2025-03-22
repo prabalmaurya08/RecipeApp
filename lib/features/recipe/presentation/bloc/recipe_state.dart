@@ -21,6 +21,15 @@ class RecipeLoadedState extends RecipeState {
   List<Object> get props => [recipes];
 }
 
+class RecipeDetailLoaded extends RecipeState {
+  final Recipe recipe;
+
+  const RecipeDetailLoaded(this.recipe);
+
+  @override
+  List<Object> get props => [recipe];
+}
+
 class RecipeErrorState extends RecipeState {
   final String message;
 

@@ -14,8 +14,28 @@ class RecipeRemoteDatasourceImpl extends RecipeRemoteDatasource {
   final Dio dio;
   RecipeRemoteDatasourceImpl(this.dio);
   @override
-  Future<RecipeModel> getRecipeDetail(int id) {
-    throw UnimplementedError();
+  Future<RecipeModel> getRecipeDetail(int id) async {
+    try {
+      final response = await dio.get(
+        '${AppSecret.baseUrl}/recipes/$id/information',
+        queryParameters: {'apiKey': AppSecret.apiKey},
+      );
+      if (response.statusCode == 200) {
+        return RecipeModel.fromJson(response.data);
+      } else {
+        throw ServerException(
+          'Failed to get trending recipes: ${response.statusCode}',
+        );
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        throw ServerException('Server error: ${e.response?.statusCode}');
+      } else {
+        throw NetworkException('Network error: ${e.message}');
+      }
+    } catch (e) {
+      throw GeneralException('General error: ${e.toString()}');
+    }
   }
 
   @override
@@ -26,7 +46,7 @@ class RecipeRemoteDatasourceImpl extends RecipeRemoteDatasource {
         queryParameters: {
           'apiKey': AppSecret.apiKey,
           'sort': 'popularity',
-          'number': 10,
+          'number': 5,
         },
       );
       if (response.statusCode == 200) {
